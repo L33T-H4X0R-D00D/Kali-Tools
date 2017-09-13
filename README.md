@@ -6,7 +6,7 @@ This is an auto configuration script for the Kali VM provided by offensive secur
 
 To get started copy and paste this link to kickoff the installation.
 
-    wget https://raw.githubusercontent.com/L33T-H4X0R-D00D/Kali-Tools/master/kalisetup.sh && chmod +x ./kalisetup.sh
+    wget https://raw.githubusercontent.com/L33T-H4X0R-D00D/Kali-Tools/master/kalisetup.sh && chmod +x ./kalisetup.sh && ./kalisetup.sh
 
 **Note:** This is still a non-working draft and does not follow *any* best practices whatsoever. I know there are better ways to do things.  I'm sure your way is very clever.  I'm publishing this to make my life easier when I have to rebuild a Kali VM. I might as well share with the public.
 
