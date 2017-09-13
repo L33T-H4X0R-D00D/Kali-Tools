@@ -21,7 +21,6 @@
 #Install Exploit Pack.
 #Install Veil Evasion 3.
 #Install GoPhish.
-#Install pwntools CTF framework.
 #Install Lynis.
 #Install PRET.
 #Update locate database.
@@ -69,7 +68,7 @@ apt install tor -y
 apt install filezilla filezilla-common -y
 apt install alien rpm nsis openvas -y
 apt install htop nethogs gdebi git bleachbit clamav -y #System utilities.
-apt install python2.7 python-pip python-dev git libssl-dev libffi-dev build-essential -y #For pwntools.
+
 
 
 
@@ -130,10 +129,10 @@ chmod +x /root/Desktop/Scripts/tools/exploitpack/start.sh
 
 
 #Install Veil Evasion 3.
-git clone https://github.com/Veil-Framework/Veil.git /usr/share/Veil
-cd /usr/share/Veil/setup
+#git clone https://github.com/Veil-Framework/Veil.git /usr/share/Veil
+#cd /usr/share/Veil/setup
 #./setup.sh -s
-./setup.sh -c
+#python Veil.py
 
 
 #Install GoPhish
@@ -141,40 +140,43 @@ cd /root/Downloads
 unzip 'gophish-*.zip' -d /usr/share/
 cd /usr/share/gophis*
 chmod 755 ./gophish
-
+#Download an updated config.json file that moves the phishing server from port 80 to port 8080. Port 80 is already used by Nessus.  
+wget --output-document=/root/Documents/config.json https://raw.githubusercontent.com/L33T-H4X0R-D00D/Kali-Tools/master/Scripts/tools/gophish/config.json
+#Move the updated file into the correct directory.
+mv /root/Documents/config.json /usr/share/gophish*/
 
 
 #Create GoPhish startup script and credentials document.
 mkdir /root/Desktop/Scripts/tools/gophish/
 echo './gophish & firefox https://localhost:3333 &' >> /root/Desktop/Scripts/tools/gophish/start.sh
+chmod +x /root/Desktop/Scripts/tools/gophish/start.sh
 echo Username: admin  >> /root/Desktop/Scripts/tools/gophish/login.txt
 echo Password: gophish >> /root/Desktop/Scripts/tools/gophish/login.txt
-
-
-#Install pwntools
-apt install python2.7 python-pip python-dev git libssl-dev libffi-dev build-essential
-pip install --upgrade pip
-pip install --upgrade pwntools
-
-
-#Update pwntools
-pip install --upgrade pwntools
 
 
 #Install Lynis
 cd /usr/local
 git clone https://github.com/CISOfy/lynis
 
-
+#Create Lynis startup script.
+mkdir /root/Desktop/Scripts/tools/lynis/
+echo lynis audit system -Q  >> /root/Desktop/Scripts/tools/lynis/localaudit.sh
+echo sleep 30s >> /root/Desktop/Scripts/tools/lynis/localaudit.sh
+chmod +x /root/Desktop/Scripts/tools/lynis/localaudit.sh
 
 #Install PRET
 pip install colorama pysnmp
 pip install win_unicode_console
 apt install imagemagick ghostscript
+git clone https://github.com/RUB-NDS/PRET /usr/share/pret/
+
+#Create PRET startup script.
+mkdir /root/Desktop/Scripts/tools/pret
+echo python /usr/share/pret/pret.py >> mkdir /root/Desktop/Scripts/tools/pret/start.sh
+chmod +x /root/Desktop/Scripts/tools/pret/start.sh
 
 #Update locate database.
 updatedb
-
 
 #Turn off screensaver and screen lock.
 xset s off # don't activate screensaver
