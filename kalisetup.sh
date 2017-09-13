@@ -80,9 +80,6 @@ apt install filezilla filezilla-common -y
 apt install alien rpm nsis openvas -y
 
 
-
-
-
 #Perform initial OpenVAS setup.
 openvas-mkcert
 openvas-mkcert-client -n -i
@@ -94,6 +91,7 @@ greenbone-scapdata-sync
 systemctl start openvas-scanner
 openvasmd --rebuild --progress
 openvasmd --create-user=admin --role=Admin --new-password=toor #Create new openvas user of "admin" with a password of "toor".
+openvas-manage-certs -a
 openvassd
 openvasmd
 gsad
@@ -111,7 +109,7 @@ echo greenbone-certdata-sync >> /root/Desktop/Scripts/tools/openvas/start.sh
 echo greenbone-scapdata-sync >> /root/Desktop/Scripts/tools/openvas/start.sh
 echo openvas-check-setup >> /root/Desktop/Scripts/tools/openvas/start.sh
 echo sleep 10s >> /root/Desktop/Scripts/tools/openvas/start.sh
-echo firefox https://127.0.0.1/l >> /root/Desktop/Scripts/tools/openvas/start.sh
+echo firefox https://127.0.0.1/ >> /root/Desktop/Scripts/tools/openvas/start.sh
 chmod +x /root/Desktop/Scripts/tools/openvas/start.sh
 
 #Install Nessus
@@ -121,11 +119,12 @@ gdebi -n /root/Downloads/Nessus*.deb
 mkdir /root/Desktop/Scripts/tools/nessus/
 echo '#!/bin/bash' >> /root/Desktop/Scripts/tools/nessus/start.sh
 echo /etc/init.d/nessusd start  >> /root/Desktop/Scripts/tools/nessus/start.sh
+echo sleep 5s >> /root/Desktop/Scripts/tools/nessus/start.sh
 echo firefox https://127.0.0.1:8834/  >> /root/Desktop/Scripts/tools/nessus/start.sh
 chmod +x /root/Desktop/Scripts/tools/nessus/start.sh
 
 #Fix any broken installs.
-apt install -f && apt autoremove && apt autoclean #Cleanup
+apt install -f && apt autoremove -y && apt autoclean -y #Cleanup
 
 
 #Install Exploit Pack.
@@ -137,13 +136,6 @@ echo '#!/bin/bash' >> /root/Desktop/Scripts/tools/exploitpack/start.sh
 echo cd /usr/share/exploitpack >> /root/Desktop/Scripts/tools/exploitpack/start.sh
 echo java -jar ExploitPack.jar >> /root/Desktop/Scripts/tools/exploitpack/start.sh
 chmod +x /root/Desktop/Scripts/tools/exploitpack/start.sh
-
-
-#Install Veil Evasion 3.
-#git clone https://github.com/Veil-Framework/Veil.git /usr/share/Veil
-#cd /usr/share/Veil/setup
-#./setup.sh -s
-#python Veil.py
 
 
 #Install GoPhish
@@ -159,21 +151,11 @@ mv /root/Documents/config.json /usr/share/gophish*/
 
 #Create GoPhish startup script and credentials document.
 mkdir /root/Desktop/Scripts/tools/gophish/
-echo './gophish & firefox https://localhost:3333 &' >> /root/Desktop/Scripts/tools/gophish/start.sh
+echo '/usr/share/gophish & firefox https://localhost:3333 &' >> /root/Desktop/Scripts/tools/gophish/start.sh
 chmod +x /root/Desktop/Scripts/tools/gophish/start.sh
 echo Username: admin  >> /root/Desktop/Scripts/tools/gophish/login.txt
 echo Password: gophish >> /root/Desktop/Scripts/tools/gophish/login.txt
 
-
-#Install Lynis
-cd /usr/local
-git clone https://github.com/CISOfy/lynis
-
-#Create Lynis startup script.
-mkdir /root/Desktop/Scripts/tools/lynis/
-echo lynis audit system -Q  >> /root/Desktop/Scripts/tools/lynis/localaudit.sh
-echo sleep 30s >> /root/Desktop/Scripts/tools/lynis/localaudit.sh
-chmod +x /root/Desktop/Scripts/tools/lynis/localaudit.sh
 
 #Install PRET
 pip install colorama pysnmp
@@ -183,8 +165,14 @@ git clone https://github.com/RUB-NDS/PRET /usr/share/pret/
 
 #Create PRET startup script.
 mkdir /root/Desktop/Scripts/tools/pret
-echo python /usr/share/pret/pret.py >> mkdir /root/Desktop/Scripts/tools/pret/start.sh
+echo python /usr/share/pret/pret.py >> /root/Desktop/Scripts/tools/pret/start.sh
 chmod +x /root/Desktop/Scripts/tools/pret/start.sh
+
+#Create TOR startup script.
+mkdir /root/Desktop/Scripts/tools/tor
+echo service tor start >> /root/Desktop/Scripts/tools/tor/start.sh
+echo proxychains firefox  >> /root/Desktop/Scripts/tools/tor/start.sh
+chmod +x /root/Desktop/Scripts/tools/tor/start.sh
 
 #Update locate database.
 updatedb
