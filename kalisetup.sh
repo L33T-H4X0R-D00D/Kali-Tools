@@ -1,6 +1,6 @@
 #!/bin/bash
 #Version 20170912.1
-#This script assumes you're logged in as root using the Kali 2017.2 VM provided by Offensive Security here: https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/.
+#This script assumes you're logged in as root using the Kali 2017.1 VM provided by Offensive Security here: https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/.
 #A browser will be opened to the Java, and Nessus download page allowing you to pick which version to install.
 #After the download is complete the script will complete the install from the downloads directory.
 #This script is setup to make it easy to comment out the components you do not wish to install, not be the most efficient use of space.
@@ -8,15 +8,16 @@
 
 
 #Create directory structure.
+#Turn off screensaver and screen lock.
 #Install Java without modifying sources.
 #Roll SSH keys.
 #Update the system.
+#Install HTOP, NetHogs, Gdebi, Git, Bleachbit, and ClamAV system utilities.
 #Install TOR.
 #Install Filezilla FTP client.
 #Install OpenVAS and Alien/NSIS/RPM dependancies.
 #Create new openvas user of "admin" with a password of "toor".
 #Update OpenVAS NVT, CERT, and SCAP data.
-#Install HTOP, NetHogs, Gdebi, Git, Bleachbit, and ClamAV system utilities.
 #Install Nessus.
 #Install Exploit Pack.
 #Install Veil Evasion 3.
@@ -24,7 +25,7 @@
 #Install Lynis.
 #Install PRET.
 #Update locate database.
-#Turn off screensaver and screen lock.
+
 
 #Create script on desktop to update ClamAV footprints.
 #Create script on desktop to start TOR service.
@@ -33,6 +34,11 @@
 
 #Create directory structure.
 mkdir /root/Desktop/Scripts && mkdir /root/Desktop/Scripts/instructions && mkdir /root/Desktop/Scripts/tools && mkdir /root/Desktop/Scripts/update
+
+#Turn off screensaver and screen lock.
+xset s off # don't activate screensaver
+xset -dpms # disable DPMS (Energy Star) features.
+xset s noblank # don't blank the video device
 
 #Java download.
 firefox http://www.java.com/en/download/linux_manual.jsp
@@ -54,6 +60,10 @@ update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.s­o mozill
 update-alternatives --set java /opt/jre*/bin/java
 update-alternatives --set javac /opt/jre*/bin/javac
 update-alternatives --set mozilla-javaplugin.so /opt/jre*/lib/amd64/libnpjp2.so
+echo ...
+echo ...
+echo ...
+echo Check out that Java version.
 java -version
 sleep 10s
 
@@ -64,10 +74,11 @@ dpkg-reconfigure openssh-server #Create new SSH keys.
 
 #Update system and install tools.
 apt update && apt upgrade -y && apt dist-upgrade -y
+apt install htop nethogs gdebi git bleachbit clamav -y #System utilities.
 apt install tor -y
 apt install filezilla filezilla-common -y
 apt install alien rpm nsis openvas -y
-apt install htop nethogs gdebi git bleachbit clamav -y #System utilities.
+
 
 
 
@@ -177,11 +188,6 @@ chmod +x /root/Desktop/Scripts/tools/pret/start.sh
 
 #Update locate database.
 updatedb
-
-#Turn off screensaver and screen lock.
-xset s off # don't activate screensaver
-xset -dpms # disable DPMS (Energy Star) features.
-xset s noblank # don't blank the video device
 
 
 
