@@ -36,7 +36,6 @@ Wireless auditing is fairly easy and straight forward. When put into monitoring 
 **Example**
 
 
-
 Terms
 =
 

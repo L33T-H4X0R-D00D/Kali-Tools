@@ -1,4 +1,5 @@
 Auto Reaver - multiple access point attack using Reaver
+
 *Version 20171003.1*
 
 This is bash script which provides multiple access point attack using reaver and BSSIDs list from a text file.
