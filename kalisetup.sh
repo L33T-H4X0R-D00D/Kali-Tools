@@ -1,5 +1,5 @@
 #!/bin/bash
-#Version 20170912.1
+#Version 20171003.1
 #This script assumes you're logged in as root using the Kali 2017.1 VM provided by Offensive Security here: https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/.
 #A browser will be opened to the Java, and Nessus download page allowing you to pick which version to install.
 #After the download is complete the script will complete the install from the downloads directory.
@@ -39,6 +39,10 @@ mkdir /root/Desktop/Scripts && mkdir /root/Desktop/Scripts/instructions && mkdir
 xset s off # don't activate screensaver
 xset -dpms # disable DPMS (Energy Star) features.
 xset s noblank # don't blank the video device
+
+#Force close Firefox if it is open.
+killall firefox
+killall -9 firefox
 
 #Java download.
 firefox http://www.java.com/en/download/linux_manual.jsp
@@ -160,7 +164,7 @@ echo Password: gophish >> /root/Desktop/Scripts/tools/gophish/login.txt
 #Install PRET
 pip install colorama pysnmp
 pip install win_unicode_console
-apt install imagemagick ghostscript
+apt install imagemagick ghostscript -y
 git clone https://github.com/RUB-NDS/PRET /usr/share/pret/
 
 #Create PRET startup script.
@@ -177,6 +181,7 @@ chmod +x /root/Desktop/Scripts/tools/tor/start.sh
 #Update locate database.
 updatedb
 
+echo Setup Complete!
 
 
 
