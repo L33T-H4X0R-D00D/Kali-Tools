@@ -1,5 +1,5 @@
 #!/bin/bash
-#Version 20171003.1
+#Version 20171107.1
 #This script assumes you're logged in as root using the Kali 2017.1 VM provided by Offensive Security here: https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/.
 #A browser will be opened to the Java, and Nessus download page allowing you to pick which version to install.
 #After the download is complete the script will complete the install from the downloads directory.
@@ -94,7 +94,12 @@ greenbone-scapdata-sync
 #Start OpenVAS services and create DB.
 systemctl start openvas-scanner
 openvasmd --rebuild --progress
-openvasmd --create-user=admin --role=Admin --new-password=toor #Create new openvas user of "admin" with a password of "toor".
+sleep 10s
+openvas-stop
+openvasmd --create-user=user --role=Admin #Create new openvas user of "admin" 
+openvasmd --user=user --new-password=toor #Create new password of "toor" for user "admin".  Combining this into a single line did not work. 
+openvas-start
+sleep 10s
 openvas-manage-certs -a
 openvassd
 openvasmd
