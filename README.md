@@ -24,7 +24,7 @@ Setup command:
 
 ----------
 
-**If you wish to configure OpenVAS for scanning printers, follow the instructions in this [link](https://imgur.com/a/AXvwl).**
+**If you wish to configure OpenVAS for scanning printers, follow the instructions in this [link](https://imgur.com/a/AXvwl) once the script above is complete.**
 
 **Note:** This is still a draft and does not follow *any* best practices whatsoever. I know there are better ways to do things.  I'm sure your way is very clever.  I'm publishing this to make my life easier when I have to rebuild a Kali VM and in some circumstances it may be used by people who are not overly familiar with GNU/Linux.  It must be very easy to troubleshoot since I will likely be doing it over the phone.  I'm always open to new ways to do something so please send me your comments.
 
