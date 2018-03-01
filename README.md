@@ -1,7 +1,7 @@
 Kali-Tools
 =
-*Version 20171003.1*    
-This is an auto configuration script for the Kali VM provided by offensive security found [here](https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/). This script installs and configures frequently used tools, and creates a directory on the desktop with common instructions for use. The main goal was to configure a fresh Kali VM while avoiding the common pitfalls normally associated with such an endeavor.
+*Version 20180301.0*    
+This is an auto configuration script for the 64 bit Kali VM provided by offensive security found [here](https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/). This script installs and configures frequently used tools, and creates a directory on the desktop with common instructions for use. The main goal was to configure a fresh Kali VM while avoiding the common pitfalls normally associated with such an endeavor.
 
 
 ----------
@@ -22,6 +22,9 @@ To get started:
 Setup command:
 >wget https://raw.githubusercontent.com/L33T-H4X0R-D00D/Kali-Tools/master/kalisetup.sh && chmod +x ./kalisetup.sh && ./kalisetup.sh
 
+----------
+
+If you wish to configure OpenVAS for scanning printers, follow the instructions in this [link]().
 
 **Note:** This is still a draft and does not follow *any* best practices whatsoever. I know there are better ways to do things.  I'm sure your way is very clever.  I'm publishing this to make my life easier when I have to rebuild a Kali VM and in some circumstances it may be used by people who are not overly familiar with GNU/Linux.  It must be very easy to troubleshoot since I will likely be doing it over the phone.  I'm always open to new ways to do something so please send me your comments.
 

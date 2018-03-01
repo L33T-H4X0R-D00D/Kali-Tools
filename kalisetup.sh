@@ -67,7 +67,7 @@ update-alternatives --set mozilla-javaplugin.so /opt/jre*/lib/amd64/libnpjp2.so
 echo ...
 echo ...
 echo ...
-echo Check out that Java version.
+echo Check out Java version.
 java -version
 sleep 10s
 
@@ -77,12 +77,7 @@ mv ssh_host_* old #Move the original keys to the old directory.
 dpkg-reconfigure openssh-server #Create new SSH keys.
 
 #Update system and install tools.
-apt update && apt upgrade -y && apt dist-upgrade -y
-apt install htop nethogs gdebi git bleachbit clamav -y #System utilities.
-apt install tor -y
-apt install filezilla filezilla-common -y
-apt install alien rpm nsis openvas -y
-
+apt update && apt upgrade -y && apt dist-upgrade -y && apt install htop nethogs gdebi git bleachbit clamav tor filezilla filezilla-common alien rpm nsis openvas -y
 
 #Perform initial OpenVAS setup.
 openvas-mkcert
