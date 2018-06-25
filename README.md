@@ -1,6 +1,6 @@
 Kali-Tools
 =
-*Version 20180301.0*    
+*Version 20180625.0*    
 This is an auto configuration script for the 64 bit Kali VM provided by offensive security found [here](https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/). This script installs and configures frequently used tools, and creates a directory on the desktop with common instructions for use. The main goal was to configure a fresh Kali VM while avoiding the common pitfalls normally associated with such an endeavor.
 
 
