@@ -1,5 +1,5 @@
 #!/bin/bash
-#Version 20180612.1 Beta
+#Version 20180620.2 Beta
 #This script assumes you're logged in as root using the Kali 2017.1 VM provided by Offensive Security here: https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/.
 #A browser will be opened to the Java, and Nessus download page allowing you to pick which version to install.
 #After the download is complete the script will complete the install from the downloads directory.
@@ -12,7 +12,7 @@
 #Install Java without modifying sources.
 #Roll SSH keys.
 #Update the system.
-#Install HTOP, NetHogs, Gdebi, Git, Bleachbit, and ClamAV system utilities.
+#Install HTOP, NetHogs, Gdebi, Git, Bleachbit, Ruby and ClamAV system utilities.
 #Install TOR.
 #Install Filezilla FTP client.
 #Install OpenVAS and Alien/NSIS/RPM dependancies.
@@ -79,7 +79,7 @@ mv ssh_host_* old #Move the original keys to the old directory.
 dpkg-reconfigure openssh-server #Create new SSH keys.
 
 #Update system and install tools.
-apt update && apt upgrade -y && apt dist-upgrade -y && apt install htop nethogs gdebi git bleachbit clamav tor filezilla filezilla-common alien rpm nsis openvas -y
+apt update && apt upgrade -y && apt dist-upgrade -y && apt install htop nethogs gdebi git bleachbit clamav tor filezilla filezilla-common alien rpm nsis ruby-full openvas -y
 
 #Perform initial OpenVAS setup.
 openvas-mkcert
@@ -162,7 +162,6 @@ chmod +x /root/Desktop/Scripts/tools/gophish/start.sh
 echo Username: admin  >> /root/Desktop/Scripts/tools/gophish/login.txt
 echo Password: gophish >> /root/Desktop/Scripts/tools/gophish/login.txt
 
-
 #Install PRET
 pip install colorama pysnmp
 pip install win_unicode_console
@@ -182,9 +181,9 @@ chmod +x /root/Desktop/Scripts/tools/tor/start.sh
 
 #Install SNMPWN
 git clone https://github.com/hatlord/snmpwn.git /usr/share/snmpwn
-echo gem install bundler
-echo cd snmpwn 
-echo bundle install
+cd /usr/share/snmpwn
+gem install bundler
+bundle install
 echo -n "Enter the IP address of your host target: "
 read hostip
 echo $hostip > /usr/share/snmpwn/hosts.txt
