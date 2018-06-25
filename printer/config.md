@@ -1,7 +1,7 @@
 Printer vulnerability analysis. 
-*Version 20180625.0*   
+*Version 20180625.1*   
 
-The following steps detail configuration of OpenVAS for printer evaluation. **Note: If you require a deeper/more intensive test, select a deeper/more intensive scan config (i.e. Full and Fast Ultimate) in step 5 and name appropriately in step 7.**
+The following steps detail configuration of OpenVAS for printer evaluation. **Note: If you require a deeper/more intensive scan, select a deeper/more intensive scan config (i.e. Full and Fast Ultimate) in step 5 and name appropriately in step 7.**
 
 ----------
 ![](images/1.png?raw=true)
@@ -23,7 +23,7 @@ The following steps detail configuration of OpenVAS for printer evaluation. **No
 6. At the top of the screen click the blue wrench icon to edit the scan config settings.
 ----------
 ![](images/7.png?raw=true)
-7. Rename the config from "clone" to something you will remember. Here I have appended the word "Printers" to the name.  Then click "Save".
+7. Rename the config from "clone" to something you will remember. Here the word "Printers" has been appended to the name.  Then click "Save".
 ----------
 ![](images/8.png?raw=true)
 8. Click the wrench icon again.
@@ -35,41 +35,43 @@ The following steps detail configuration of OpenVAS for printer evaluation. **No
 10. Uncheck the boxes next to the three entries shown above.  Then click "Save".
 ----------
 ![](images/11.png?raw=true)
+11. Click the blue wrench next to settings again. 
+----------
 ![](images/12.png?raw=true)
-11. Click the blue wrench icon next to "Global variable settings".
+12. Click the blue wrench icon next to "Global variable settings".
 ----------
 ![](images/13.png?raw=true)
-12. Change the settings to "Enable generic web application scanning" to yes, "Exclude known fragile devices/ports from scan" to no, and "Exclude printers from scan" to no.  Then click "Save".
+13. Change the settings to "Enable generic web application scanning" to yes, "Exclude known fragile devices/ports from scan" to no, and "Exclude printers from scan" to no.  Then click "Save".
 ----------
 ![](images/14.png?raw=true)
-13. Click "Save".
-----------
-![](images/15.png?raw=true)
 14. Click "Save".
 ----------
+![](images/15.png?raw=true)
+15. Click "Save".
+----------
 ![](images/16.png?raw=true)
-15. Go to "Configuration", "Targets".
+16. Go to "Configuration", "Targets".
 ----------
 ![](images/17.png?raw=true)
-16. Click the blue star icon in the top left corner of the page to create a new target.
+17. Click the blue star icon in the top left corner of the page to create a new target.
 ----------
 ![](images/18.png?raw=true)
-17. Create a name for the target.  Provide an IP address or IP address range for the target. Select "All TCP and Nmap 5.51 to 1000 UDP". Then click "Create".
+18. Create a name for the target.  Provide an IP address or IP address range for the target. Select "All TCP and Nmap 5.51 to 1000 UDP". Then click "Create".
 ----------
 ![](images/19.png?raw=true)
-18. Go to "Scans", "Tasks".
+19. Go to "Scans", "Tasks".
 ----------
 ![](images/20.png?raw=true)
-19. Click the blue star icon in the top left corner of the page to create a new scan.
+20. Click the blue star icon in the top left corner of the page to create a new scan.
 ----------
 ![](images/21.png?raw=true)
-20. Give the scan a name. Select the scan target you created previously. Change "Alterable Task" to "yes".
+21. Give the scan a name. Select the scan target you created previously. Change "Alterable Task" to "yes".
 ----------
 ![](images/22.png?raw=true)
-21. Select the scan config you created previously.  Click "Create".
+22. Select the scan config you created previously.  Click "Create".
 ----------
 ![](images/23.png?raw=true)
-22. Click the green play icon to start your scan.
+23. Click the green play icon to start your scan.
 ----------
 
 
