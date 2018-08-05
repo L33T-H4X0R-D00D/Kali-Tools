@@ -1,11 +1,10 @@
 #!/bin/bash
-#Version 20180612.1 Beta
+#Version 20180804.2
 #This script assumes you're logged in as root using the Kali 2017.1 VM provided by Offensive Security here: https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/.
 #A browser will be opened to the Java, and Nessus download page allowing you to pick which version to install.
 #After the download is complete the script will complete the install from the downloads directory.
 #This script is setup to make it easy to comment out the components you do not wish to install, not be the most efficient use of space.
 #This script creates a directory on the desktop with scripts that update tools, scripts that run tools, and some basic instructions for tools.
-
 
 #Create directory structure.
 #Turn off screensaver and screen lock.
@@ -23,15 +22,15 @@
 #Install Veil Evasion 3.
 #Install GoPhish.
 #Install Lynis.
-#Install PRET.
+#Install PRET
+#Create PRET Alias
 #Install SNMPWN
 #Update locate database.
-
-
 #Create script on desktop to update ClamAV footprints.
 #Create script on desktop to start TOR service.
 #Create script on desktop to update Exploit Pack.
 #Create script on desktop to update Veil Evasion 3.
+#Create script on desktop to run PRET
 #Create script on desktop to run SNMPWN
 
 #Create directory structure.
@@ -132,7 +131,6 @@ chmod +x /root/Desktop/Scripts/tools/nessus/start.sh
 #Fix any broken installs.
 apt install -f && apt autoremove -y && apt autoclean -y #Cleanup
 
-
 #Install Exploit Pack.
 git clone https://github.com/juansacco/exploitpack.git /usr/share/exploitpack
 
@@ -142,7 +140,6 @@ echo '#!/bin/bash' >> /root/Desktop/Scripts/tools/exploitpack/start.sh
 echo cd /usr/share/exploitpack >> /root/Desktop/Scripts/tools/exploitpack/start.sh
 echo java -jar ExploitPack.jar >> /root/Desktop/Scripts/tools/exploitpack/start.sh
 chmod +x /root/Desktop/Scripts/tools/exploitpack/start.sh
-
 
 #Install GoPhish
 cd /root/Downloads
@@ -154,14 +151,12 @@ wget --output-document=/root/Documents/config.json https://raw.githubusercontent
 #Move the updated file into the correct directory.
 mv /root/Documents/config.json /usr/share/gophish*/
 
-
 #Create GoPhish startup script and credentials document.
 mkdir /root/Desktop/Scripts/tools/gophish/
 echo '/usr/share/gophish & firefox https://localhost:3333 &' >> /root/Desktop/Scripts/tools/gophish/start.sh
 chmod +x /root/Desktop/Scripts/tools/gophish/start.sh
 echo Username: admin  >> /root/Desktop/Scripts/tools/gophish/login.txt
 echo Password: gophish >> /root/Desktop/Scripts/tools/gophish/login.txt
-
 
 #Install PRET
 pip install colorama pysnmp
@@ -171,8 +166,20 @@ git clone https://github.com/RUB-NDS/PRET /usr/share/pret/
 
 #Create PRET startup script.
 mkdir /root/Desktop/Scripts/tools/pret
-echo python /usr/share/pret/pret.py >> /root/Desktop/Scripts/tools/pret/start.sh
+{
+echo '	echo -n "Please Enter the Target Printer IP Address:"'
+echo '	read PRETIP'
+echo '	echo -n "Please Enter a Valid Printing Language (pcl,ps,pjl):"'
+echo '	read PRETLANG'
+echo '	python /usr/share/pret/pret.py $PRETIP $PRETLANG'
+echo '	if [ $# -eq 0 ]; then "${SHELL:-sh}"; else "$@"; fi'
+echo '	echo "The command exited with status $?. Press Enter to close the terminal."'
+echo '	read line'
+} >> /root/Desktop/Scripts/tools/pret/start.sh
 chmod +x /root/Desktop/Scripts/tools/pret/start.sh
+
+#Create PRET Alias for easier tool launching
+sed "/ls=/ a alias pret='python /usr/share/pret/pret.py'" .bashrc > .bashrcmod && mv .bashrcmod .bashrc 
 
 #Create TOR startup script.
 mkdir /root/Desktop/Scripts/tools/tor
