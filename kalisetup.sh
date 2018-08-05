@@ -173,7 +173,7 @@ echo '	echo -n "Please Enter a Valid Printing Language (pcl,ps,pjl):"'
 echo '	read PRETLANG'
 echo '	python /usr/share/pret/pret.py $PRETIP $PRETLANG'
 echo '	if [ $# -eq 0 ]; then "${SHELL:-sh}"; else "$@"; fi'
-echo '	echo "The command exited with status $?. Press Enter to close the terminal."'
+echo '	echo "The command has finished $?. Press the enter key to exit"'
 echo '	read line'
 } >> /root/Desktop/Scripts/tools/pret/start.sh
 chmod +x /root/Desktop/Scripts/tools/pret/start.sh
@@ -189,9 +189,9 @@ chmod +x /root/Desktop/Scripts/tools/tor/start.sh
 
 #Install SNMPWN
 git clone https://github.com/hatlord/snmpwn.git /usr/share/snmpwn
-echo gem install bundler
-echo cd snmpwn 
-echo bundle install
+gem install bundler
+cd snmpwn 
+bundle install
 echo -n "Enter the IP address of your host target: "
 read hostip
 echo $hostip > /usr/share/snmpwn/hosts.txt
