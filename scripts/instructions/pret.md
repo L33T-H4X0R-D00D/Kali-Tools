@@ -1,6 +1,6 @@
 Instructions
 =
-*Version 20180801*
+*Version 20180805*
 
 Contents
 =
@@ -19,7 +19,7 @@ A quicklaunch script is available on the desktop for easy access to the tool.
 Launching PRET with the GUI Shortcut
 =
 A shortcut has been created that allows you to launch directly into PRET. 
-- Navigate to the directory `/Desktop/Scripts/Tools/PRET 
+- Navigate to the directory `/Desktop/Scripts/Tools/PRET`
 - Double click the `start.sh` file
 - Enter the Target Printer's IP Address
 - Enter the Desired Attack Language (This is case sensitive. You may enter "pcl","ps", or "pjl")
