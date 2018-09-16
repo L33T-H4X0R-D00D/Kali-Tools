@@ -1,5 +1,5 @@
 #!/bin/bash
-#Version 20180620.2 Beta
+#Version 20180916.0 Beta
 #This script assumes you're logged in as root using the Kali 2017.1 VM provided by Offensive Security here: https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/.
 #A browser will be opened to the Java, and Nessus download page allowing you to pick which version to install.
 #After the download is complete the script will complete the install from the downloads directory.
@@ -179,34 +179,36 @@ echo service tor start >> /root/Desktop/Scripts/tools/tor/start.sh
 echo proxychains firefox  >> /root/Desktop/Scripts/tools/tor/start.sh
 chmod +x /root/Desktop/Scripts/tools/tor/start.sh
 
+#  SNMPwn dependancies are currently broken. Tool is not currently used for testing. Will re-enable once dependancies are fixed.
 #Install SNMPWN
-git clone https://github.com/hatlord/snmpwn.git /usr/share/snmpwn
-cd /usr/share/snmpwn
-gem install bundler
-bundle install
-echo -n "Enter the IP address of your host target: "
-read hostip
-echo $hostip > /usr/share/snmpwn/hosts.txt
+# git clone https://github.com/hatlord/snmpwn.git /usr/share/snmpwn
+# cd /usr/share/snmpwn
+# gem install bundler
+# bundle install
+# echo -n "Enter the IP address of your host target: "
+# read hostip
+# echo $hostip > /usr/share/snmpwn/hosts.txt
 
 #Create SNMPWN start script
-mkdir /root/Desktop/Scripts/tools/snmpwn
-echo cd /usr/share/snmpwn >> /root/Desktop/Scripts/tools/snmpwn/runsnmpwn.sh
-echo ./snmpwn.rb -h hosts.txt -u users.txt -p passwords.txt -e passwords.txt >> /root/Desktop/Scripts/tools/snmpwn/runsnmpwn.sh
-chmod +x /root/Desktop/Scripts/tools/snmpwn/runsnmpwn.sh
+# mkdir /root/Desktop/Scripts/tools/snmpwn
+# echo cd /usr/share/snmpwn >> /root/Desktop/Scripts/tools/snmpwn/runsnmpwn.sh
+# echo ./snmpwn.rb -h hosts.txt -u users.txt -p passwords.txt -e passwords.txt >> /root/Desktop/Scripts/tools/snmpwn/runsnmpwn.sh
+# chmod +x /root/Desktop/Scripts/tools/snmpwn/runsnmpwn.sh
 
 #Create snmpwn Hosts Update Scipt
-{ 
-echo '	read -p "Add additional IP addresses? (y/n)" ADDIP'
-echo '	if [ "$ADDIP" = "y" ]; then'
-echo '	echo "Enter the IP address of your additional target: " ;'
-echo '	read extrahostip'
-echo '	echo "" >> /usr/share/snmpwn/hosts.txt'
-echo '	echo "$extrahostip" >> /usr/share/snmpwn/hosts.txt'
-echo '	else'
-echo '	echo "no"'
-echo '	fi'
-} >> /root/Desktop/Scripts/tools/snmpwn/addhost.sh
-chmod +x /root/Desktop/Scripts/tools/snmpwn/addhost.sh
+# { 
+# echo '	read -p "Add additional IP addresses? (y/n)" ADDIP'
+# echo '	if [ "$ADDIP" = "y" ]; then'
+# echo '	echo "Enter the IP address of your additional target: " ;'
+# echo '	read extrahostip'
+# echo '	echo "" >> /usr/share/snmpwn/hosts.txt'
+# echo '	echo "$extrahostip" >> /usr/share/snmpwn/hosts.txt'
+# echo '	else'
+# echo '	echo "no"'
+# echo '	fi'
+# } >> /root/Desktop/Scripts/tools/snmpwn/addhost.sh
+# chmod +x /root/Desktop/Scripts/tools/snmpwn/addhost.sh
+
 
 #Update locate database.
 updatedb
