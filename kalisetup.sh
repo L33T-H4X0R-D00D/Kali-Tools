@@ -1,5 +1,5 @@
 #!/bin/bash
-#Version 20180916.0 Beta
+#Version 20191212.0 Beta
 #This script assumes you're logged in as root using the Kali 2017.1 VM provided by Offensive Security here: https://www.offensive-security.com/kali-linux-vmware-virtualbox-image-download/.
 #A browser will be opened to the Java, and Nessus download page allowing you to pick which version to install.
 #After the download is complete the script will complete the install from the downloads directory.
@@ -145,8 +145,9 @@ chmod +x /root/Desktop/Scripts/tools/exploitpack/start.sh
 
 
 #Install GoPhish
+mkdir /usr/share/gophish/
 cd /root/Downloads
-unzip 'gophish-*.zip' -d /usr/share/
+unzip 'gophish-*.zip' -d /usr/share/gophish/
 cd /usr/share/gophis*
 chmod 755 ./gophish
 #Download an updated config.json file that moves the phishing server from port 80 to port 8080. Port 80 is already used by Nessus.  
